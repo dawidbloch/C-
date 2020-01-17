@@ -1,0 +1,76 @@
+using System;
+using System.IO;
+
+namespace _04._01._20
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            FileStream plik = new FileStream
+                (@"D:\Studia\Podstawy Programowania\4-5.01.20\test1.txt", FileMode.Append, FileAccess.Write);
+            try
+            {
+                StreamWriter zapis = new StreamWriter(plik);
+                zapis.WriteLine("cd 5");
+                zapis.WriteLine("cd 6");
+                zapis.WriteLine("cd 7");
+                zapis.WriteLine("cd 8");
+                zapis.Close();
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            plik.Close();
+            FileInfo finfo = new FileInfo("test1.txt");
+            Console.WriteLine("Pełna nazwa: {0}", finfo.FullName);
+            Console.WriteLine("Rozmiar: {0}", finfo.Length);
+            Console.WriteLine("Czas utworzenia: {0}", finfo.CreationTime);
+        }
+    }
+}
+
+
+using System;
+using System.IO;
+
+namespace Zapisywanie_tekstu
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            FileStream pliczek = new FileStream(@"d:\Studia\Podstawy Programowania\4-5.01.20\pliczek.txt", FileMode.OpenOrCreate, FileAccess.Write);
+            string linia = "";
+            uint i = 1;
+            try
+            {
+                StreamWriter zapisek = new StreamWriter(pliczek);
+                while (linia != "end")
+                {
+                    try
+                    {
+                        Console.WriteLine("Podaj {0} linię tekstu: ", i);
+                        linia = Console.ReadLine();
+                        if (linia == "end") break;
+                        zapisek.WriteLine(i + ". " + linia);
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine("Błąd zapisu strumienia...");
+                        break;
+                    }
+                    i++;
+                }
+                zapisek.Close();
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.ToString());
+            }
+            pliczek.Close();
+        }
+    }
+}
