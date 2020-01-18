@@ -1,0 +1,235 @@
+using System;
+
+namespace _21._12._19
+{
+    class Program
+    {
+        //TO BĘDZIE NA QUIZIE!--------------------------------------------------------------------------------------------------------------------
+        static void zmien1(int x)
+        {
+            x = x + 10;
+        }
+        static void zmien2(int[] tab)
+        {
+            tab[2] = 12;
+        }
+        static void zmien3(int[] tab2)
+        {
+            tab2 = new int[5]
+            { 9, 9, 9, 9, 9 };
+        }
+        static void zmien4(ref int x)
+        {
+            x = x + 10;
+        }
+        static void Main(string[] args)
+        {
+            int liczba = 20;
+            Console.WriteLine("Wartość zmiennej przed wywołaniem: {0}", liczba);
+            zmien1(liczba);
+            Console.WriteLine("Wartość zmiennej po wywołaniu:{0}", liczba);
+            int[] tab = new int[10];
+            for (int i = 0; i < 10; i++) tab[i] = i + 1;
+            Console.WriteLine("Wartość tablicy przed wywołaniem: {0}", tab[2]);
+            zmien2(tab);
+            Console.WriteLine("Wartość tablicy po wywołaniu: {0}", tab[2]);
+            int[] tab2 = new int[5];
+            for (int i = 0; i < 5; i++) tab2[i] = i + 1;
+            Console.WriteLine("Wartość tablicy przed wywołaniem: {0}", tab2[3]);
+            zmien3(tab2);
+            Console.WriteLine("Wartość tablicy po wywołaniem: {0}", tab2[3]);
+
+            Console.WriteLine("Wartość zmiennej przed wywołaniem: {0}", liczba);
+            zmien4(ref liczba);
+            Console.WriteLine("Wartość zmiennej po wywołaniu:{0}", liczba);
+        }
+    }
+}
+
+
+
+
+
+using System;
+
+namespace liczba_pierwsza
+{
+    class Program
+    {
+        static bool pierwsza(uint a)
+        {
+            if (a == 1) return false;
+            for (uint i=2; i*i<=a; i++)
+            {
+                if (a % i == 0) return false;
+            }
+            return true;
+        }
+        static void Main(string[] args)
+        {
+            uint koniec;
+            Console.WriteLine("Podaj koniec zakresu:");
+            koniec = uint.Parse(Console.ReadLine());
+            for (uint i=1;i<=koniec;i++)
+            {
+                if (pierwsza(i)) Console.Write(i+ " ,");
+            }
+        }
+    }
+}
+
+
+
+
+
+using System;
+
+namespace QUIZ_CD
+{
+    class Program
+    {
+        static void pobierz(out int x)
+        {
+            Console.WriteLine("Podaj liczbę:");
+            x = int.Parse(Console.ReadLine());
+        }
+        static void puste(uint ile)
+        {
+         for (uint i=1; i <= ile; i++)
+                Console.WriteLine();
+        }
+        static bool spr( string napis, char znak)
+        {
+            for (int i = 0; i < napis.Length; i++)
+            {
+                if (napis[i] == znak)
+                    return true;
+            }
+            return false;
+        }
+        static void Main(string[] args)
+        {
+            int a;
+            pobierz(out a);
+            Console.WriteLine("Wartość zmiennej:{0}", a);
+
+            Console.WriteLine("Początek");
+            puste(1);
+            Console.WriteLine("5 lat póżniej");
+            puste(3);
+            Console.WriteLine("  I jeszcze 20 lat za murzynami:");
+
+            string tekst;
+            Console.WriteLine("Podaj tekst:");
+            tekst=Console.ReadLine();
+            Console.WriteLine("Podaj znak");
+            char zn = char.Parse(Console.ReadLine());
+            if (spr(tekst, zn)) Console.WriteLine("Znak {0} jest w tekście {1}", zn, tekst);
+            else
+                Console.WriteLine("Znaku {0} nie ma w tekście {1}", zn, tekst);
+        }
+    }
+}
+
+
+
+
+
+using System;
+using System.Threading;
+
+namespace _22._12._19
+{
+    class Program
+    {
+        static int nwd(int a, int b)
+        {
+            int reszta;
+            while (b != 0)
+            {
+                reszta = a % b;
+                a = b;
+                b = reszta;
+            }
+            return a;
+        }
+        static uint fibo(uint n)
+        {
+            uint a = 0;
+            uint b = 1;
+            uint c = 0;
+            for (uint i=1; i<n; i++)
+            {
+                c = a + b;
+                a = b;
+                b = c;
+            }
+            return b;
+        }
+        static char mala()
+        {
+            Random los = new Random();
+            Thread.Sleep(15);
+            char znak = (char)('a' + los.Next(0, 26));
+            return znak;
+        }
+        static char duza()
+        {
+            Random los = new Random();
+            char znak = (char)('A' + los.Next(0, 26));
+            return znak;
+        }
+        static double silnia(uint n)
+        {
+            if (n == 0 || n == 1) return 1;
+            return silnia(n - 1) * n;
+        }
+        
+            static void Main(string[] args)
+        {
+            /*Console.WriteLine("NWD(1261, 679)={0}",nwd(1261,679));
+            int licznik, mianownik;
+            Console.WriteLine("Podaj licznik ułamka:");
+            licznik = int.Parse(Console.ReadLine());
+            Console.WriteLine("Podaj mianownik ułamka:");
+            mianownik = int.Parse(Console.ReadLine());
+            Console.WriteLine("Twój ułamek to: {0}/{1}", licznik, mianownik);
+            int mianownik2, licznik2, en;
+            en = nwd(licznik, mianownik);
+            mianownik2 = mianownik / en;
+            licznik2 = licznik / en;
+            if(en == 1)
+            {
+                Console.WriteLine("To jest ułamek nieskracalny!");
+            }
+            else
+            {
+                Console.WriteLine("Po skróceniu...");
+                Console.WriteLine("{0}/{1}={2}/{3}",licznik,mianownik,licznik2,mianownik2);
+            }
+            if (licznik > mianownik)
+            {
+                int całe = licznik2 / mianownik2;
+                licznik2 = licznik2 - całe * mianownik2;
+                if (licznik2 == 0)
+                    Console.WriteLine("Po włączeniu całości: {0}", całe);
+                else
+                    Console.WriteLine("Po wyłączeniu całości: {0} i {1}/{2}", całe, licznik2, mianownik2);
+            } ===================
+            uint n;
+            Console.WriteLine("Do którego generować?");
+            n = uint.Parse(Console.ReadLine());
+            for (uint i = 1; i <= n; i++)
+            {
+                Console.WriteLine("Fibo({0})={1}", i, fibo(i));
+            } ===============
+            for (int i=1; i<=100; i++)
+                Console.Write(mala()+ " ");
+                */
+
+            Console.WriteLine("6! = {0}", silnia(6));
+            double lotek = silnia(49) / silnia(43) * silnia(6);
+            Console.WriteLine("Kmbinacje: {0}", lotek);
+        }
+    }
+}
